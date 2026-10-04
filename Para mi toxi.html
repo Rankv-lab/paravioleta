@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para Violeta 💜</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #000000;
+            color: #fff;
+            font-family: 'Georgia', serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            overflow: hidden;
+            position: relative;
+            padding: 20px;
+        }
+
+        .cielo {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            overflow: hidden;
+            background: radial-gradient(ellipse at bottom, #1a0033 0%, #000000 60%, #000000 100%);
+        }
+
+        .estrella {
+            position: absolute;
+            background: #ffffff;
+            border-radius: 50%;
+            animation: titilar ease-in-out infinite;
+            will-change: opacity;
+        }
+
+        @keyframes titilar {
+            0%, 100% {
+                opacity: 0.2;
+                transform: scale(0.8);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1.2);
+            }
+        }
+
+        .estrella-grande {
+            position: absolute;
+            background: #ffffff;
+            border-radius: 50%;
+            box-shadow:
+                0 0 6px #ffffff,
+                0 0 12px #da70d6,
+                0 0 20px #ba55d3;
+            animation: titilarGrande ease-in-out infinite;
+            will-change: opacity, transform;
+        }
+
+        @keyframes titilarGrande {
+            0%, 100% {
+                opacity: 0.5;
+                transform: scale(0.9);
+                box-shadow:
+                    0 0 6px #ffffff,
+                    0 0 12px #da70d6,
+                    0 0 20px #ba55d3;
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1.3);
+                box-shadow:
+                    0 0 10px #ffffff,
+                    0 0 20px #da70d6,
+                    0 0 35px #ba55d3,
+                    0 0 50px #8a2be2;
+            }
+        }
+
+        .meteoro {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: #ffffff;
+            border-radius: 50%;
+            box-shadow:
+                0 0 6px #ffffff,
+                0 0 12px #da70d6,
+                0 0 20px #ba55d3;
+            z-index: 1;
+            will-change: transform, opacity;
+        }
+
+        .meteoro::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            right: 0;
+            width: 120px;
+            height: 2px;
+            background: linear-gradient(to left,
+                #ffffff 0%,
+                #da70d6 20%,
+                rgba(218, 112, 214, 0.5) 50%,
+                transparent 100%);
+            transform: translateY(-50%);
+            border-radius: 50%;
+            filter: blur(1px);
+        }
+
+        @keyframes caerMeteoro {
+            0% {
+                transform: translate(0, 0) rotate(-35deg);
+                opacity: 0;
+            }
+            5% {
+                opacity: 1;
+            }
+            70% {
+                opacity: 1;
+            }
+            100% {
+                transform: translate(-800px, 800px) rotate(-35deg);
+                opacity: 0;
+            }
+        }
+
+        .gato-cayendo {
+            position: fixed;
+            top: -100px;
+            pointer-events: none;
+            z-index: 4;
+            filter: drop-shadow(0 0 10px rgba(218, 112, 214, 0.9));
+            will-change: transform, opacity;
+            animation: caerGato linear forwards;
+        }
+
+        @keyframes caerGato {
+            0% {
+                transform: translateY(0) translateX(0) rotate(-20deg) scale(0.7);
+                opacity: 0;
+            }
+            8% {
+                opacity: 1;
+            }
+            20% {
+                transform: translateY(20vh) translateX(-40px) rotate(15deg) scale(1);
+            }
+            40% {
+                transform: translateY(40vh) translateX(40px) rotate(-15deg) scale(1.1);
+            }
+            60% {
+                transform: translateY(60vh) translateX(-35px) rotate(20deg) scale(1);
+            }
+            80% {
+                transform: translateY(80vh) translateX(30px) rotate(-10deg) scale(0.95);
+            }
+            92% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(115vh) translateX(-15px) rotate(25deg) scale(0.8);
+                opacity: 0;
+            }
+        }
+
+        @keyframes caerConfeti {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(110vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+
+        .carta {
+            max-width: 700px;
+            width: 90%;
+            background: rgba(20, 0, 40, 0.7);
+            backdrop-filter: blur(15px);
+            border: 2px solid rgba(186, 85, 211, 0.5);
+            border-radius: 25px;
+            padding: 45px 35px;
+            text-align: center;
+            box-shadow:
+                0 10px 40px rgba(138, 43, 226, 0.6),
+                0 0 60px rgba(218, 112, 214, 0.3),
+                0 0 100px rgba(255, 105, 180, 0.15) inset;
+            z-index: 3;
+            position: relative;
+            animation: aparecer 1.5s ease;
+        }
+
+        @keyframes aparecer {
+            from {
+                opacity: 0;
+                transform: translateY(30px) scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        h1 {
+            font-size: 2.4rem;
+            margin-bottom: 25px;
+            background: linear-gradient(90deg, #da70d6, #ff69b4, #ba55d3, #ff1493, #da70d6);
+            background-size: 300% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: brillo 4s linear infinite;
+            text-shadow: 0 0 30px rgba(218, 112, 214, 0.6);
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        @keyframes brillo {
+            to { background-position: 300% center; }
+        }
+
+        #mensaje {
+            font-size: 1.25rem;
+            line-height: 1.9;
+            min-height: 140px;
+            margin: 25px 0;
+            color: #f8d7ff;
+            font-style: italic;
+            text-shadow: 0 0 10px rgba(218, 112, 214, 0.5);
+        }
+
+        #mensaje::after {
+            content: '💜';
+            animation: cursor 0.8s infinite;
+            margin-left: 5px;
+            font-style: normal;
+        }
+
+        @keyframes cursor {
+            50% { opacity: 0; }
+        }
+
+        .boton {
+            background: linear-gradient(135deg, #ba55d3, #ff1493, #8a2be2);
+            background-size: 200% auto;
+            color: white;
+            border: none;
+            padding: 16px 45px;
+            font-size: 1.15rem;
+            border-radius: 50px;
+            cursor: pointer;
+            font-family: 'Georgia', serif;
+            font-weight: bold;
+            box-shadow:
+                0 5px 25px rgba(138, 43, 226, 0.7),
+                0 0 25px rgba(255, 105, 180, 0.5);
+            transition: all 0.3s ease;
+            margin-top: 20px;
+            letter-spacing: 0.5px;
+        }
+
+        .boton:hover {
+            transform: scale(1.07);
+            box-shadow:
+                0 8px 35px rgba(138, 43, 226, 0.9),
+                0 0 40px rgba(255, 105, 180, 0.8);
+            background-position: right center;
+        }
+
+        .boton:active {
+            transform: scale(0.98);
+        }
+
+        .corazon-grande {
+            font-size: 7rem;
+            animation: latir 1.2s infinite;
+            display: inline-block;
+            margin: 20px 0;
+            filter: drop-shadow(0 0 35px rgba(218, 112, 214, 1));
+        }
+
+        @keyframes latir {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        .progreso {
+            display: flex;
+            justify-content: center;
+            gap: 14px;
+            margin-top: 28px;
+            flex-wrap: wrap;
+        }
+
+        .punto {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: rgba(186, 85, 211, 0.15);
+            border: 2px solid #da70d6;
+            transition: all 0.3s ease;
+        }
+
+        .punto.activo {
+            background: #ff69b4;
+            box-shadow: 0 0 18px #ff69b4, 0 0 30px rgba(255, 105, 180, 0.8);
+            transform: scale(1.4);
+            animation: latirPunto 0.8s infinite;
+        }
+
+        @keyframes latirPunto {
+            0%, 100% { transform: scale(1.4); }
+            50% { transform: scale(1.6); }
+        }
+
+        .punto.completado {
+            background: #8a2be2;
+            box-shadow: 0 0 15px #8a2be2, 0 0 25px #ba55d3;
+            border-color: #da70d6;
+        }
+
+        .mensaje-final-especial {
+            font-size: 1.15rem;
+            line-height: 2;
+            color: #f8d7ff;
+            font-style: italic;
+            margin: 25px 0;
+            padding: 25px;
+            background: rgba(138, 43, 226, 0.2);
+            border-radius: 20px;
+            border: 1px solid rgba(218, 112, 214, 0.5);
+            text-shadow: 0 0 12px rgba(218, 112, 214, 0.6);
+        }
+
+        .nombre-destacado {
+            font-size: 1.5rem;
+            font-weight: bold;
+            background: linear-gradient(90deg, #ff69b4, #da70d6, #ff1493);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: brillo 3s linear infinite;
+            display: inline-block;
+        }
+
+        .footer {
+            margin-top: 25px;
+            color: #da70d6;
+            font-size: 0.95rem;
+            font-style: italic;
+            opacity: 0.9;
+        }
+
+        .btn-musica {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(20, 0, 40, 0.7);
+            border: 1px solid #da70d6;
+            color: #fff;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+            z-index: 10;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(5px);
+        }
+
+        .btn-musica:hover {
+            background: rgba(138, 43, 226, 0.8);
+            transform: scale(1.1);
+            box-shadow: 0 0 25px rgba(218, 112, 214, 0.9);
+        }
+
+        @media (max-width: 600px) {
+            h1 { font-size: 1.6rem; }
+            #mensaje { font-size: 1.05rem; min-height: 120px; }
+            .carta { padding: 30px 20px; }
+            .corazon-grande { font-size: 5.5rem; }
+            .btn-musica { top: 10px; right: 10px; }
+            .nombre-destacado { font-size: 1.25rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="cielo" id="cielo"></div>
+
+    <button class="btn-musica" id="btnMusica" onclick="toggleMusica()" title="Reproducir música">🎵</button>
+
+    <audio id="musica" loop>
+        <source src="yung-kai-blue.mp3" type="audio/mpeg">
+    </audio>
+
+    <div class="carta">
+        <h1 id="titulo">💜 Hola Violeta 💜</h1>
+        <div id="mensaje"></div>
+        <div class="progreso" id="progreso"></div>
+        <button class="boton" id="btn" onclick="siguienteMensaje()">Comenzar 💜</button>
+    </div>
+
+    <script>
+        const mensajes = [
+            "Hola, Violeta... 💜",
+            "Te hice esto porque quería decirte algo...",
+            "Cada momento a tu lado es mágico ✨",
+            "Sos la persona más especial que conocí 💜",
+            "Y quería recordarte algo importante...",
+            "Sos mi persona favorita en todo el mundo 🌍",
+            "Gracias por existir y por estar conmigo...",
+            "Y ahora... quiero decirte algo más 💕"
+        ];
+
+        const mensajeDiv = document.getElementById('mensaje');
+        const btn = document.getElementById('btn');
+        const titulo = document.getElementById('titulo');
+        const progresoDiv = document.getElementById('progreso');
+        const musica = document.getElementById('musica');
+        const btnMusica = document.getElementById('btnMusica');
+        const cielo = document.getElementById('cielo');
+
+        let indice = 0;
+        let escribiendo = false;
+        let musicaSonando = false;
+
+        function toggleMusica() {
+            if (musicaSonando) {
+                musica.pause();
+                btnMusica.innerText = '🎵';
+                btnMusica.title = 'Reproducir música';
+            } else {
+                musica.volume = 0.4;
+                musica.play().then(() => {
+                    btnMusica.innerText = '🔊';
+                    btnMusica.title = 'Pausar música';
+                }).catch(() => {
+                    console.log('No se pudo reproducir el audio.');
+                });
+            }
+            musicaSonando = !musicaSonando;
+        }
+
+        function crearPuntos() {
+            for (let i = 0; i < mensajes.length; i++) {
+                const punto = document.createElement('div');
+                punto.className = 'punto';
+                progresoDiv.appendChild(punto);
+            }
+        }
+
+        function actualizarProgreso(indiceActual) {
+            const puntos = document.querySelectorAll('.punto');
+            puntos.forEach((p, i) => {
+                p.classList.remove('activo', 'completado');
+                if (i < indiceActual) p.classList.add('completado');
+                if (i === indiceActual) p.classList.add('activo');
+            });
+        }
+
+        function escribirTexto(texto, callback) {
+            escribiendo = true;
+            mensajeDiv.textContent = '';
+            let i = 0;
+
+            const intervalo = setInterval(() => {
+                if (i < texto.length) {
+                    mensajeDiv.textContent += texto.charAt(i);
+                    i++;
+                } else {
+                    clearInterval(intervalo);
+                    escribiendo = false;
+                    if (callback) callback();
+                }
+            }, 45);
+        }
+
+        function siguienteMensaje() {
+            if (escribiendo) return;
+
+            if (indice >= mensajes.length) {
+                mostrarFinal();
+                return;
+            }
+
+            if (indice === 1) {
+                titulo.innerText = "💜 Un mensaje para vos 💜";
+            }
+
+            actualizarProgreso(indice);
+
+            escribirTexto(mensajes[indice], () => {
+                indice++;
+                if (indice < mensajes.length) {
+                    btn.innerText = indice === mensajes.length - 1 ? "💜 Último 💜" : "Siguiente 💜";
+                } else {
+                    btn.innerText = "💕 Ver el final 💕";
+                }
+            });
+        }
+
+        function mostrarFinal() {
+            document.querySelector('.carta').innerHTML = `
+                <h1>💜 Te Amo Violeta 💜</h1>
+                <div class="corazon-grande">💜</div>
+                <div class="mensaje-final-especial">
+                    Siempre te voy a amar, por más feka que seas 💜<br>
+                    Siempre estaré a tu lado, <span class="nombre-destacado">Violeta</span> 💕<br>
+                    <br>
+                    Sos mi persona favorita en todo el universo 🌌
+                </div>
+                <div class="corazon-grande">❤️</div>
+                <p class="footer">Hecho con 💜 para vos, Violeta</p>
+            `;
+
+            lanzarConfeti();
+            lanzarGatosFinales();
+        }
+
+        function lanzarConfeti() {
+            const colores = ['#ba55d3', '#ff69b4', '#da70d6', '#ff1493', '#8a2be2', '#ffb6c1', '#9400d3'];
+            for (let i = 0; i < 100; i++) {
+                setTimeout(() => {
+                    const confeti = document.createElement('div');
+                    confeti.style.position = 'fixed';
+                    confeti.style.top = '-20px';
+                    confeti.style.left = Math.random() * 100 + '%';
+                    confeti.style.background = colores[Math.floor(Math.random() * colores.length)];
+                    confeti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
+                    confeti.style.width = (Math.random() * 8 + 8) + 'px';
+                    confeti.style.height = (Math.random() * 8 + 8) + 'px';
+                    confeti.style.zIndex = '4';
+                    confeti.style.pointerEvents = 'none';
+                    confeti.style.animation = `caerConfeti ${Math.random() * 2 + 2.5}s linear forwards`;
+                    document.body.appendChild(confeti);
+                    setTimeout(() => confeti.remove(), 5500);
+                }, i * 25);
+            }
+        }
+
+        function lanzarGatosFinales() {
+            const gatos = ['😺', '😸', '😻', '😽', '🐱', '😺', '🐾', '😸', '😻', '🐱'];
+            for (let i = 0; i < 60; i++) {
+                setTimeout(() => {
+                    const gato = document.createElement('div');
+                    gato.className = 'gato-cayendo';
+                    gato.innerText = gatos[Math.floor(Math.random() * gatos.length)];
+                    gato.style.left = Math.random() * 90 + 5 + '%';
+                    gato.style.fontSize = (Math.random() * 22 + 22) + 'px';
+                    gato.style.animationDuration = (Math.random() * 4 + 5) + 's';
+                    gato.style.opacity = (Math.random() * 0.35 + 0.65).toString();
+
+                    document.body.appendChild(gato);
+
+                    const duracion = parseFloat(gato.style.animationDuration) * 1000;
+                    setTimeout(() => gato.remove(), duracion + 500);
+                }, i * 120);
+            }
+        }
+
+        function crearEstrellas() {
+            const numEstrellas = 200;
+            for (let i = 0; i < numEstrellas; i++) {
+                const estrella = document.createElement('div');
+                estrella.className = 'estrella';
+                const size = Math.random() * 2 + 1;
+                estrella.style.width = size + 'px';
+                estrella.style.height = size + 'px';
+                estrella.style.left = Math.random() * 100 + '%';
+                estrella.style.top = Math.random() * 100 + '%';
+                estrella.style.animationDuration = (Math.random() * 3 + 2) + 's';
+                estrella.style.animationDelay = (Math.random() * 5) + 's';
+                estrella.style.opacity = (Math.random() * 0.5 + 0.2).toString();
+                cielo.appendChild(estrella);
+            }
+        }
+
+        function crearEstrellasGrandes() {
+            const numEstrellas = 40;
+            for (let i = 0; i < numEstrellas; i++) {
+                const estrella = document.createElement('div');
+                estrella.className = 'estrella-grande';
+                const size = Math.random() * 2 + 2;
+                estrella.style.width = size + 'px';
+                estrella.style.height = size + 'px';
+                estrella.style.left = Math.random() * 100 + '%';
+                estrella.style.top = Math.random() * 100 + '%';
+                estrella.style.animationDuration = (Math.random() * 2 + 1.5) + 's';
+                estrella.style.animationDelay = (Math.random() * 4) + 's';
+                cielo.appendChild(estrella);
+            }
+        }
+
+        function crearMeteoro() {
+            const meteoro = document.createElement('div');
+            meteoro.className = 'meteoro';
+            meteoro.style.left = (Math.random() * 40 + 60) + '%';
+            meteoro.style.top = (Math.random() * 40) + '%';
+            meteoro.style.animation = `caerMeteoro ${Math.random() * 1.5 + 1.5}s linear forwards`;
+            cielo.appendChild(meteoro);
+            setTimeout(() => meteoro.remove(), 3500);
+        }
+
+        function programarMeteoro() {
+            crearMeteoro();
+            const proximo = Math.random() * 4000 + 2000;
+            setTimeout(programarMeteoro, proximo);
+        }
+
+        crearPuntos();
+        actualizarProgreso(0);
+
+        crearEstrellas();
+        crearEstrellasGrandes();
+        setTimeout(programarMeteoro, 1500);
+
+        setTimeout(() => {
+            escribirTexto(mensajes[0], () => {
+                indice = 1;
+                btn.innerText = "Siguiente 💜";
+            });
+        }, 800);
+    </script>
+</body>
+</html>
