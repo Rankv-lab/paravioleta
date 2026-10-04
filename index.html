@@ -71,67 +71,10 @@
             0%, 100% {
                 opacity: 0.5;
                 transform: scale(0.9);
-                box-shadow:
-                    0 0 6px #ffffff,
-                    0 0 12px #da70d6,
-                    0 0 20px #ba55d3;
             }
             50% {
                 opacity: 1;
                 transform: scale(1.3);
-                box-shadow:
-                    0 0 10px #ffffff,
-                    0 0 20px #da70d6,
-                    0 0 35px #ba55d3,
-                    0 0 50px #8a2be2;
-            }
-        }
-
-        .meteoro {
-            position: absolute;
-            width: 3px;
-            height: 3px;
-            background: #ffffff;
-            border-radius: 50%;
-            box-shadow:
-                0 0 6px #ffffff,
-                0 0 12px #da70d6,
-                0 0 20px #ba55d3;
-            z-index: 1;
-            will-change: transform, opacity;
-        }
-
-        .meteoro::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            right: 0;
-            width: 120px;
-            height: 2px;
-            background: linear-gradient(to left,
-                #ffffff 0%,
-                #da70d6 20%,
-                rgba(218, 112, 214, 0.5) 50%,
-                transparent 100%);
-            transform: translateY(-50%);
-            border-radius: 50%;
-            filter: blur(1px);
-        }
-
-        @keyframes caerMeteoro {
-            0% {
-                transform: translate3d(0, 0, 0) rotate(-35deg);
-                opacity: 0;
-            }
-            5% {
-                opacity: 1;
-            }
-            70% {
-                opacity: 1;
-            }
-            100% {
-                transform: translate3d(-800px, 800px, 0) rotate(-35deg);
-                opacity: 0;
             }
         }
 
@@ -190,17 +133,16 @@
         .carta {
             max-width: 700px;
             width: 90%;
-            background: rgba(20, 0, 40, 0.7);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
+            background: rgba(20, 0, 40, 0.75);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             border: 2px solid rgba(186, 85, 211, 0.5);
             border-radius: 25px;
             padding: 45px 35px;
             text-align: center;
             box-shadow:
                 0 10px 40px rgba(138, 43, 226, 0.6),
-                0 0 60px rgba(218, 112, 214, 0.3),
-                0 0 100px rgba(255, 105, 180, 0.15) inset;
+                0 0 60px rgba(218, 112, 214, 0.3);
             z-index: 3;
             position: relative;
             animation: aparecer 1.5s ease;
@@ -226,7 +168,6 @@
             -webkit-text-fill-color: transparent;
             background-clip: text;
             animation: brillo 4s linear infinite;
-            text-shadow: 0 0 30px rgba(218, 112, 214, 0.6);
             font-weight: bold;
             letter-spacing: 1px;
         }
@@ -276,14 +217,6 @@
             -webkit-tap-highlight-color: transparent;
         }
 
-        .boton:hover {
-            transform: scale(1.07);
-            box-shadow:
-                0 8px 35px rgba(138, 43, 226, 0.9),
-                0 0 40px rgba(255, 105, 180, 0.8);
-            background-position: right center;
-        }
-
         .boton:active {
             transform: scale(0.98);
         }
@@ -293,7 +226,7 @@
             animation: latir 1.2s infinite;
             display: inline-block;
             margin: 20px 0;
-            filter: drop-shadow(0 0 35px rgba(218, 112, 214, 1));
+            text-shadow: 0 0 35px rgba(218, 112, 214, 1);
             will-change: transform;
         }
 
@@ -323,17 +256,11 @@
             background: #ff69b4;
             box-shadow: 0 0 18px #ff69b4, 0 0 30px rgba(255, 105, 180, 0.8);
             transform: scale(1.4);
-            animation: latirPunto 0.8s infinite;
-        }
-
-        @keyframes latirPunto {
-            0%, 100% { transform: scale(1.4); }
-            50% { transform: scale(1.6); }
         }
 
         .punto.completado {
             background: #8a2be2;
-            box-shadow: 0 0 15px #8a2be2, 0 0 25px #ba55d3;
+            box-shadow: 0 0 15px #8a2be2;
             border-color: #da70d6;
         }
 
@@ -387,15 +314,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            backdrop-filter: blur(5px);
-            -webkit-backdrop-filter: blur(5px);
             -webkit-tap-highlight-color: transparent;
-        }
-
-        .btn-musica:hover {
-            background: rgba(138, 43, 226, 0.8);
-            transform: scale(1.1);
-            box-shadow: 0 0 25px rgba(218, 112, 214, 0.9);
         }
 
         @media (max-width: 600px) {
@@ -439,23 +358,19 @@
         ];
 
         // ==========================================
-        //  DETECCIÓN DE DISPOSITIVO Y OPTIMIZACIÓN
+        //  CONFIGURACIÓN EQUILIBRADA PARA MÓVIL
         // ==========================================
         const esMovil = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
                          || window.innerWidth < 768;
 
-        // Cantidades dinámicas según dispositivo
-        const numEstrellas        = esMovil ? 80 : 200;
-        const numEstrellasGrandes = esMovil ? 15 : 40;
-        const msEntreGatos        = esMovil ? 1500 : 600;
-        const maxGatos            = esMovil ? 8 : 20;
-        const msEntreMeteoros     = esMovil ? 6000 : 2000;
-        const cantidadGatosFinal  = esMovil ? 25 : 60;
-        const msEntreGatosFinal   = esMovil ? 250 : 120;
+        // Cantidades balanceadas para móvil (más gatos, resto optimizado)
+        const numEstrellas        = esMovil ? 50 : 200;
+        const numEstrellasGrandes = esMovil ? 10 : 40;
+        const maxGatos            = esMovil ? 12 : 25;
+        const cantidadGatosFinal  = esMovil ? 35 : 60;
+        const msEntreGatosFinal   = esMovil ? 180 : 120;
+        const cantidadConfeti     = esMovil ? 30 : 100;
 
-        // ==========================================
-        //  VARIABLES
-        // ==========================================
         const mensajeDiv = document.getElementById('mensaje');
         const btn = document.getElementById('btn');
         const titulo = document.getElementById('titulo');
@@ -469,9 +384,6 @@
         let musicaSonando = false;
         let gatosActivos = 0;
 
-        // ==========================================
-        //  MÚSICA
-        // ==========================================
         function toggleMusica() {
             if (musicaSonando) {
                 musica.pause();
@@ -489,9 +401,6 @@
             musicaSonando = !musicaSonando;
         }
 
-        // ==========================================
-        //  PUNTOS DE PROGRESO
-        // ==========================================
         function crearPuntos() {
             for (let i = 0; i < mensajes.length; i++) {
                 const punto = document.createElement('div');
@@ -509,15 +418,12 @@
             });
         }
 
-        // ==========================================
-        //  EFECTO MÁQUINA DE ESCRIBIR
-        // ==========================================
         function escribirTexto(texto, callback) {
             escribiendo = true;
             mensajeDiv.textContent = '';
             let i = 0;
 
-            const velocidad = esMovil ? 55 : 45;
+            const velocidad = esMovil ? 60 : 45;
 
             const intervalo = setInterval(() => {
                 if (i < texto.length) {
@@ -531,9 +437,6 @@
             }, velocidad);
         }
 
-        // ==========================================
-        //  SIGUIENTE MENSAJE
-        // ==========================================
         function siguienteMensaje() {
             if (escribiendo) return;
 
@@ -558,9 +461,6 @@
             });
         }
 
-        // ==========================================
-        //  FINAL ESPECIAL
-        // ==========================================
         function mostrarFinal() {
             document.querySelector('.carta').innerHTML = `
                 <h1>💜 Te Amo Violeta 💜</h1>
@@ -579,14 +479,10 @@
             lanzarGatosFinales();
         }
 
-        // ==========================================
-        //  CONFETI
-        // ==========================================
         function lanzarConfeti() {
             const colores = ['#ba55d3', '#ff69b4', '#da70d6', '#ff1493', '#8a2be2', '#ffb6c1', '#9400d3'];
-            const cantidad = esMovil ? 40 : 100;
 
-            for (let i = 0; i < cantidad; i++) {
+            for (let i = 0; i < cantidadConfeti; i++) {
                 setTimeout(() => {
                     const confeti = document.createElement('div');
                     confeti.style.position = 'fixed';
@@ -602,13 +498,10 @@
                     confeti.style.animation = `caerConfeti ${Math.random() * 2 + 2.5}s linear forwards`;
                     document.body.appendChild(confeti);
                     setTimeout(() => confeti.remove(), 5500);
-                }, i * (esMovil ? 50 : 25));
+                }, i * (esMovil ? 60 : 25));
             }
         }
 
-        // ==========================================
-        //  LLUVIA DE GATOS FINAL (con límite)
-        // ==========================================
         function lanzarGatosFinales() {
             const gatos = ['😺', '😸', '😻', '😽', '🐱', '😺', '🐾', '😸', '😻', '🐱'];
 
@@ -622,7 +515,7 @@
                     gato.innerText = gatos[Math.floor(Math.random() * gatos.length)];
                     gato.style.left = Math.random() * 90 + 5 + '%';
                     gato.style.fontSize = (Math.random() * 22 + 22) + 'px';
-                    gato.style.animationDuration = (Math.random() * 4 + 5) + 's';
+                    gato.style.animationDuration = (Math.random() * 4 + 6) + 's';
                     gato.style.opacity = (Math.random() * 0.35 + 0.65).toString();
 
                     document.body.appendChild(gato);
@@ -636,9 +529,6 @@
             }
         }
 
-        // ==========================================
-        //  ESTRELLAS
-        // ==========================================
         function crearEstrellas() {
             for (let i = 0; i < numEstrellas; i++) {
                 const estrella = document.createElement('div');
@@ -670,34 +560,11 @@
             }
         }
 
-        // ==========================================
-        //  METEOROS
-        // ==========================================
-        function crearMeteoro() {
-            const meteoro = document.createElement('div');
-            meteoro.className = 'meteoro';
-            meteoro.style.left = (Math.random() * 40 + 60) + '%';
-            meteoro.style.top = (Math.random() * 40) + '%';
-            meteoro.style.animation = `caerMeteoro ${Math.random() * 1.5 + 1.5}s linear forwards`;
-            cielo.appendChild(meteoro);
-            setTimeout(() => meteoro.remove(), 3500);
-        }
-
-        function programarMeteoro() {
-            crearMeteoro();
-            const proximo = Math.random() * msEntreMeteoros + msEntreMeteoros / 2;
-            setTimeout(programarMeteoro, proximo);
-        }
-
-        // ==========================================
-        //  INICIALIZAR
-        // ==========================================
         crearPuntos();
         actualizarProgreso(0);
 
         crearEstrellas();
         crearEstrellasGrandes();
-        setTimeout(programarMeteoro, 1500);
 
         setTimeout(() => {
             escribirTexto(mensajes[0], () => {
